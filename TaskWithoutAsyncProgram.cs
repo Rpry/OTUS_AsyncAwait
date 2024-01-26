@@ -32,18 +32,18 @@
             return Task.FromResult(true);
         }
 
-        public async Task<HttpResponseMessage> GetWithKeywordsAsync(string url)
+        private async Task<HttpResponseMessage> GetWithKeywordsAsync(string url)
         {
-            throw new Exception("Ex!!");
+            //throw new Exception("Ex!!");
             using (var client = new HttpClient())
             {
                 return await client.GetAsync(url);
             }
         }
 
-        public Task<HttpResponseMessage> GetElidingKeywordsAsync(string url)
+        private Task<HttpResponseMessage> GetElidingKeywordsAsync(string url)
         {
-            throw new Exception("Ex!!");
+            //throw new Exception("Ex!!");
             using (var client = new HttpClient())
             {
                 return client.GetAsync(url);

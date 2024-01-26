@@ -7,7 +7,7 @@
             Task task = null;
             try
             {
-                task = WaitForSmthAsync(2);
+                task = ThrowInAsync();
                 await task;
             }
             catch (Exception e)
@@ -23,9 +23,9 @@
             Task allTasks = Task.CompletedTask;
             try
             {
-                var task1 = WaitForSmthAsync(1);
-                var task2 = WaitForSmthAsync(2);
-                var task3 = WaitForSmthAsync(3);
+                var task1 = ThrowInAsync();
+                var task2 = ThrowInAsync();
+                var task3 = ThrowInAsync();
 
                 Console.WriteLine("getting all tasks");
                 allTasks = Task.WhenAll(task1, task2, task3);
@@ -56,13 +56,13 @@
             {
                 task = Task.Run<bool>(async () =>
                 {
-                    await WaitForSmthAsync(2);
+                    await ThrowInAsync();
                     return true;
                 });
 
-                var result = task.Result;
+                //var result = task.Result;
                 //task.Wait();
-                //var result = task.GetAwaiter().GetResult();
+                var result = task.GetAwaiter().GetResult();
 
             }
             catch (AggregateException e)
@@ -89,20 +89,19 @@
                 Console.WriteLine(e);
             }
         }
-
-        private async Task WaitForSmthAsync(int taskIndex)
+        
+        private async Task ThrowInAsync()
         { 
             //await Task.Delay(TimeSpan.FromMilliseconds(1));
-            if (taskIndex >= 2)
-            { 
-                throw new InvalidOperationException($"The task {taskIndex} finished with failure");
-            }
+            throw new InvalidOperationException($"The task finished with failure");
         }
 
         //private void MethodAsync()
-        private Task MethodAsync()
-        //private async void MethodAsync()
+        //private async Task MethodAsync()
+        //private Task MethodAsync()
+        private async void MethodAsync()
         {
+            //await Task.Delay(1000);
             throw new Exception("Ex!");
         }
     }

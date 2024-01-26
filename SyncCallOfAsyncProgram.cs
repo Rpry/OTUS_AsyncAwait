@@ -2,16 +2,15 @@
 {
     public class SyncCallOfAsyncProgram
     {
-        public Task Execute1Async()
+        public void Execute1()
         {
-            var task = WaitAndWriteStartAsync();
+            var task = WaitAndWriteStartAsync(); 
             var result = task.Result;
-            //task.Wait();
-            Console.WriteLine(result);
-            return Task.CompletedTask;
+            task.Wait();
+            //Console.WriteLine(result);
         }
 
-        public async Task Execute2Async()
+        public void Execute2()
         {
             var task = WaitAndWriteStartAsync();
             var result = task.GetAwaiter().GetResult();
@@ -20,12 +19,7 @@
 
         private async Task<bool> WaitAndWriteStartAsync()
         {
-            await Task.Delay(2000);
-            return true;
-        }
-
-        private bool WaitAndWriteStart2()
-        {
+            await Task.Delay(10000);
             return true;
         }
     }

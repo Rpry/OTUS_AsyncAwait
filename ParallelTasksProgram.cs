@@ -24,9 +24,9 @@ namespace Otus.AsyncAwait
 
             var stopwatch = new Stopwatch();
             stopwatch.Start();
-            var list = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, };
+            var list = new List<int>() { 2, 1, 3, 4, 5, 6, 7, 8, 9, 10, };
 
-            List<Task> tasks = new List<Task>();
+            List<Task<int>> tasks = new List<Task<int>>();
             foreach (var item in list)
             {
                 tasks.Add(SomeLongAwaitingAsync(item));
@@ -59,11 +59,10 @@ namespace Otus.AsyncAwait
         {
             int timeOnOperationMs = new Random().Next(1000, 3000);
             Console.WriteLine($"start delay for {item} thread № {Environment.CurrentManagedThreadId}");
-            Console.WriteLine($"start delay for {item}");
             await Task.Delay(TimeSpan.FromMilliseconds(timeOnOperationMs));
-            Console.WriteLine($"finish delay for {item}");
+            Console.WriteLine($"finish delay for {item} thread {Environment.CurrentManagedThreadId}");
             //Console.WriteLine($"finish delay for {item} thread № {Environment.CurrentManagedThreadId}");
-            return await Task.FromResult(0);
+            return await Task.FromResult(item);
         }
     }
 }

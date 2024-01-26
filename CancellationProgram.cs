@@ -6,9 +6,32 @@ namespace Otus.AsyncAwait
     {
         public async Task Execute1Async()
         {
+            //cancelling by scheduler
+            CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(4));
+            var token = cts.Token;
+            var server = new Server();
+            try
+            {
+                await server.ConnectAsync("client 1", token);
+            }
+            catch (OperationCanceledException e)
+            {
+                Console.WriteLine($"Exception Message: {e.Message}");
+                Console.WriteLine($"Exception Type: {e.GetType().Name}");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Exception {e.Message} was fired");
+            }
+        }
+        
+        public async Task Execute1Async2()
+        {
             //cancelling by event
-
+            var server = new Server();
             CancellationTokenSource cts = new CancellationTokenSource();
+            var token = cts.Token;
+            
             var cancelTask = Task.Run(async () =>
             {
                 await Task.Delay(TimeSpan.FromSeconds(2));
@@ -16,19 +39,11 @@ namespace Otus.AsyncAwait
                 cts.Dispose();
             });
 
-
-            //cancelling by scheduler
-            //CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(4));
-
-            var token =  cts.Token;
-            var server = new Server();
             try
             {
-                var requestTask = server.ConnectAsync("client 1", token);
-
-                var tasks = new List<Task>()
+                var tasks = new List<Task>
                 {
-                    requestTask,
+                    server.ConnectAsync("client 1", token),
                     cancelTask,
                 };
 
@@ -50,7 +65,7 @@ namespace Otus.AsyncAwait
             //cancelling by scheduler
             CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(4));
 
-            var token =  cts.Token;
+            var token = cts.Token;
             var server = new Server();
             try
             {
@@ -80,7 +95,7 @@ namespace Otus.AsyncAwait
             var server = new Server();
             try
             {
-                await server.ConnectAsync("client 1").WaitAsync(TimeSpan.FromSeconds(40));
+                await server.ConnectAsync("client 1").WaitAsync(TimeSpan.FromSeconds(20));
             }
             catch (OperationCanceledException e)
             {
@@ -119,10 +134,9 @@ namespace Otus.AsyncAwait
                     /*
                     if (cancellationToken.Value.IsCancellationRequested)
                     {
-                        return await Task.FromCanceled<int>(cancellationToken);
+                        return await Task.FromCanceled<int>(cancellationToken.Value);
                     }
                     */
-
                 }
             }
 
