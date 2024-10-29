@@ -1,7 +1,29 @@
 ﻿namespace Otus.AsyncAwait
 {
-    public class CreatingTasksProgram
+    public class StartingTasksProgram
     {
+        public async Task Execute0Async()
+        {
+            Console.WriteLine($"Start: {Environment.CurrentManagedThreadId}");
+            var task = new Task(() =>
+            {
+                Console.WriteLine($"Before operation: {Environment.CurrentManagedThreadId}");
+                Console.WriteLine(1);
+                Console.WriteLine($"After operation: {Environment.CurrentManagedThreadId}");
+            });
+            await task;
+            Console.WriteLine($"Finish: ThreadId {Environment.CurrentManagedThreadId}");
+        }
+        
+        public async Task Execute00Async()
+        {
+            Console.WriteLine($"Start: {Environment.CurrentManagedThreadId}");
+            var task = Internal();
+            await Task.Delay(TimeSpan.FromSeconds(1));
+            await task;
+            Console.WriteLine($"Finish: ThreadId {Environment.CurrentManagedThreadId}");
+        }
+        
         public async Task Execute1Async()
         {
             Console.WriteLine("Main flow started");
@@ -38,6 +60,14 @@
                 Console.WriteLine("Task ended");
             }, TaskCreationOptions.None);
             Console.WriteLine("Main flow finished");
+        }
+
+        private async Task Internal()
+        {
+            Console.WriteLine($"Before operation: {Environment.CurrentManagedThreadId}");
+            await Task.Delay(TimeSpan.FromSeconds(1));
+            Console.WriteLine(1);
+            Console.WriteLine($"After operation: {Environment.CurrentManagedThreadId}");    
         }
     }
 }

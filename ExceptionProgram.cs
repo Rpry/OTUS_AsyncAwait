@@ -7,7 +7,7 @@
             Task task = null;
             try
             {
-                task = ThrowInAsync();
+                task = ThrowInAsync(1);
                 await task;
             }
             catch (Exception e)
@@ -23,9 +23,9 @@
             Task allTasks = Task.CompletedTask;
             try
             {
-                var task1 = ThrowInAsync();
-                var task2 = ThrowInAsync();
-                var task3 = ThrowInAsync();
+                var task1 = ThrowInAsync(1);
+                var task2 = ThrowInAsync(2);
+                var task3 = ThrowInAsync(3);
 
                 Console.WriteLine("getting all tasks");
                 allTasks = Task.WhenAll(task1, task2, task3);
@@ -56,7 +56,7 @@
             {
                 task = Task.Run<bool>(async () =>
                 {
-                    await ThrowInAsync();
+                    await ThrowInAsync(1);
                     return true;
                 });
 
@@ -90,10 +90,10 @@
             }
         }
         
-        private async Task ThrowInAsync()
+        private async Task ThrowInAsync(int i)
         { 
             //await Task.Delay(TimeSpan.FromMilliseconds(1));
-            throw new InvalidOperationException($"The task finished with failure");
+            throw new InvalidOperationException($"The task {i} finished with failure");
         }
 
         //private void MethodAsync()

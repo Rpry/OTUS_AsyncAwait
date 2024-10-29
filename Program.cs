@@ -19,19 +19,25 @@ namespace Otus.AsyncAwait
 
             var commonProgram = new CommonProgram();
             //await commonProgram.Execute1Async();  //task await 1
-             //await commonProgram.Execute2Async();  //task await 2
-            // //await commonProgram.Execute4Async();   //task statuses
+            //await commonProgram.Execute2Async();  //task await 2
+            //await commonProgram.Execute4Async();   //task statuses
             //await commonProgram.Execute3Async();   //task threads
+            
+            var yieldControlProgram = new YieldControlProgram();
+            //yieldControlProgram.Example1_Method1(); 
+            //yieldControlProgram.Example2_Method1();
 
             var syncCallOfAsyncProgram = new SyncCallOfAsyncProgram();
-            syncCallOfAsyncProgram.Execute1();
+            //syncCallOfAsyncProgram.Execute1();
             //syncCallOfAsyncProgram.Execute2();
             
             var taskWithoutAsync = new TaskWithoutAsync();
             //await taskWithoutAsync.Execute1Async();
             //await taskWithoutAsync.Execute1Async();
 
-            var creatingTasksProgram = new CreatingTasksProgram();
+            var creatingTasksProgram = new StartingTasksProgram();
+            //await creatingTasksProgram.Execute0Async();
+            //await creatingTasksProgram.Execute00Async();
             //await creatingTasksProgram.Execute2Async();
             //await creatingTasksProgram.Execute3Async();
             //await creatingTasksProgram.Execute1Async();
@@ -54,13 +60,6 @@ namespace Otus.AsyncAwait
             //await cancellationProgram.Execute3Async();   // WaitAsync
 
             return;
-        }
-
-        static async Task<string> SaySomething()
-        {
-            Task.Delay(5);
-            Message = "Hello!";
-            return "bla-bla-bla";
         }
     }
 }

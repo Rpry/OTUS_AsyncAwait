@@ -20,7 +20,7 @@ namespace Otus.AsyncAwait
             Console.WriteLine("finish");
             await task;
         }
-        
+
         public async Task Execute3Async()
         {
             Console.WriteLine($"pre-start. ThreadId {Environment.CurrentManagedThreadId}");
@@ -32,9 +32,14 @@ namespace Otus.AsyncAwait
         {
             //Console.WriteLine($"pre-start. ThreadId {Environment.CurrentManagedThreadId}");
             var task = DelayAsync();
-            Console.WriteLine($"task state: {task.Status}");
+            while (!task.IsCompleted)
+            {
+                Console.WriteLine($"task state >> {task.Status}");
+                //await Task.Delay(TimeSpan.FromSeconds(1));
+            }
+            Console.WriteLine($"task state after while: {task.Status}");
             await task;
-            Console.WriteLine($"task state: {task.Status}");
+            Console.WriteLine($"task state after await: {task.Status}");
         }
 
         private async Task WaitAndWriteStartAsync()
@@ -45,7 +50,7 @@ namespace Otus.AsyncAwait
 
         private async Task StartAsync()
         {
-            //await Task.Delay(2000);
+            await Task.Delay(2000);
             //await Task.Delay(0);
             Console.WriteLine("start");
         }
@@ -54,8 +59,8 @@ namespace Otus.AsyncAwait
         {
             await Task.Delay(2000);
         }
-        
-        
+
+
         private async Task Execute2Async_2()
         {
             var task = StartAsync();
@@ -63,6 +68,7 @@ namespace Otus.AsyncAwait
             {
                 await Task.Delay(1000);
             }
+
             Console.WriteLine("finish");
             await task;
         }
