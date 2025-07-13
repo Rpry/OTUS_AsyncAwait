@@ -23,7 +23,7 @@ namespace Otus.AsyncAwait
             Console.WriteLine($"hello again {DateTime.UtcNow}");
         }
         
-        public async Task<int> ExecuteAsync()
+        public async Task<int> ExecuteAsync(int x)
         {
             Console.WriteLine("hello");
             //return Task.FromResult(1);

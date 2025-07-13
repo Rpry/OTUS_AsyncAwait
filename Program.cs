@@ -6,12 +6,12 @@ namespace Otus.AsyncAwait
 {
     internal class Program
     {
-        private static string Message = "Message";
-
         static async Task Main(string[] args)
         {
-            //SaySomething();
-            //Console.WriteLine(Message);
+            var yieldControlProgram = new YieldControlProgram();
+            //yieldControlProgram.Example1_Method1(); 
+            //yieldControlProgram.Example2_Method1();
+            
             var simpleProgram = new SimpleProgram();
             //simpleProgram.Execute1Async();
             //simpleProgram.Execute3Async();
@@ -22,10 +22,6 @@ namespace Otus.AsyncAwait
             //await commonProgram.Execute2Async();  //task await 2
             //await commonProgram.Execute4Async();   //task statuses
             //await commonProgram.Execute3Async();   //task threads
-            
-            var yieldControlProgram = new YieldControlProgram();
-            //yieldControlProgram.Example1_Method1(); 
-            //yieldControlProgram.Example2_Method1();
 
             var syncCallOfAsyncProgram = new SyncCallOfAsyncProgram();
             //syncCallOfAsyncProgram.Execute1();
@@ -40,7 +36,7 @@ namespace Otus.AsyncAwait
             //await creatingTasksProgram.Execute00Async();
             //await creatingTasksProgram.Execute2Async();
             //await creatingTasksProgram.Execute3Async();
-            //await creatingTasksProgram.Execute1Async();
+            //await creatingTasksProgram.Execute_TaskStart();
             
             var parallelTasksProgram = new ParallelTasksProgram();
             //await parallelTasksProgram.Execute1Async();

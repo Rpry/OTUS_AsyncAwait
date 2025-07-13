@@ -7,7 +7,7 @@ namespace Otus.AsyncAwait
         public async Task Execute1Async()
         {
             //cancelling by scheduler
-            CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(24));
+            CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(4));
             var token = cts.Token;
             var server = new Server();
             try
@@ -34,7 +34,7 @@ namespace Otus.AsyncAwait
             
             var cancelTask = Task.Run(async () =>
             {
-                await Task.Delay(TimeSpan.FromSeconds(22));
+                await Task.Delay(TimeSpan.FromSeconds(20));
                 cts.Cancel();
                 cts.Dispose();
             });
@@ -95,9 +95,9 @@ namespace Otus.AsyncAwait
             var server = new Server();
             try
             {
-                await server.ConnectAsync("client 1").WaitAsync(TimeSpan.FromSeconds(22));
+                await server.ConnectAsync("client 1").WaitAsync(TimeSpan.FromSeconds(2));
             }
-            catch (OperationCanceledException e)
+            catch (TaskCanceledException e)
             {
                 Console.WriteLine($"Exception Message: {e.Message}");
                 Console.WriteLine($"Exception Type: {e.GetType().Name}");

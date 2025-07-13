@@ -10,7 +10,7 @@ namespace Otus.AsyncAwait
     {
         public async Task Execute1Async()
         {
-            WaitAndWriteStartAsync();
+            await WaitAndWriteStartAsync();
             Console.WriteLine("finish");
         }
 

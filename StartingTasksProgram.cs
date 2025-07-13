@@ -8,7 +8,7 @@
             var task = new Task(() =>
             {
                 Console.WriteLine($"Before operation: {Environment.CurrentManagedThreadId}");
-                Console.WriteLine(1);
+                Console.WriteLine("Inside task");
                 Console.WriteLine($"After operation: {Environment.CurrentManagedThreadId}");
             });
             await task;
@@ -19,27 +19,11 @@
         {
             Console.WriteLine($"Start: {Environment.CurrentManagedThreadId}");
             var task = Internal();
-            await Task.Delay(TimeSpan.FromSeconds(1));
+            await Task.Delay(TimeSpan.FromSeconds(3));
             await task;
             Console.WriteLine($"Finish: ThreadId {Environment.CurrentManagedThreadId}");
         }
         
-        public async Task Execute1Async()
-        {
-            Console.WriteLine("Main flow started");
-            var task = new Task(() =>
-            {
-                Console.WriteLine("Task started");
-                Console.WriteLine("Task ended");
-            });
-            Console.WriteLine($"STATUS: {task.Status}");
-            task.Start();
-            Console.WriteLine($"STATUS: {task.Status}");
-            await task;
-            Console.WriteLine($"STATUS: {task.Status}");
-            Console.WriteLine("Main flow finished");
-        }
-
         public async Task Execute2Async()
         {
             Console.WriteLine($"Main flow started.");
@@ -61,12 +45,28 @@
             }, TaskCreationOptions.None);
             Console.WriteLine("Main flow finished");
         }
+        
+        public async Task Execute_TaskStart()
+        {
+            Console.WriteLine("Main flow started");
+            var task = new Task(() =>
+            {
+                Console.WriteLine("Task started");
+                Console.WriteLine("Task ended");
+            });
+            Console.WriteLine($"STATUS: {task.Status}");
+            task.Start();
+            Console.WriteLine($"STATUS: {task.Status}");
+            await task;
+            Console.WriteLine($"STATUS: {task.Status}");
+            Console.WriteLine("Main flow finished");
+        }
 
         private async Task Internal()
         {
             Console.WriteLine($"Before operation: {Environment.CurrentManagedThreadId}");
             await Task.Delay(TimeSpan.FromSeconds(1));
-            Console.WriteLine(1);
+            Console.WriteLine("Inside");
             Console.WriteLine($"After operation: {Environment.CurrentManagedThreadId}");    
         }
     }

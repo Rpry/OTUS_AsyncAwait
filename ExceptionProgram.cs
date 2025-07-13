@@ -8,7 +8,7 @@
             try
             {
                 task = ThrowInAsync(1);
-                await task;
+                 await task;
             }
             catch (Exception e)
             {
@@ -63,7 +63,6 @@
                 //var result = task.Result;
                 //task.Wait();
                 var result = task.GetAwaiter().GetResult();
-
             }
             catch (AggregateException e)
             {
