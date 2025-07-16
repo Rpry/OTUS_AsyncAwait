@@ -30,6 +30,7 @@ namespace Otus.AsyncAwait
             var taskWithoutAsync = new TaskWithoutAsync();
             //await taskWithoutAsync.Execute1Async();
             //await taskWithoutAsync.Execute1Async();
+            await taskWithoutAsync.Execute3Async();
 
             var creatingTasksProgram = new StartingTasksProgram();
             //await creatingTasksProgram.Execute0Async();

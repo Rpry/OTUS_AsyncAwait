@@ -19,6 +19,23 @@
             Console.WriteLine(httpResponseMessage.Version);
         }
 
+        public async Task Execute3Async()
+        {
+            Console.WriteLine($"Main flow started.");
+            var task = Task.Run(() =>
+            {
+                Console.WriteLine($"Inside task.");
+            })
+                .ContinueWith(async t =>
+            {
+                var res= GetElidingKeywordsAsync("https://google.com");
+                await res;
+            });
+            
+            await await task; //Task возвращает Task от ContinueWith, поэтому ждем дважды
+            Console.WriteLine("Main flow finished");
+        }
+
         private Task<bool> WaitAndWriteStart()
         {
             return WaitAndWriteStartInternal();
